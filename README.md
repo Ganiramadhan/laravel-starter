@@ -1,22 +1,19 @@
 
-# Backend DagangBareng
+# Laravel REST API Starter Kit
 
-**DagangBareng** adalah backend API untuk platform e-commerce sederhana yang membantu pelaku UMKM membuka toko online mereka sendiri. Backend ini dibangun menggunakan **Laravel 12** dan **PostgreSQL**, serta dilengkapi dengan dokumentasi API menggunakan **Swagger (L5-Swagger)**.
+Starter kit ini adalah backend REST API yang dibangun menggunakan **Laravel 12** dan **PostgreSQL**, dilengkapi dengan autentikasi **JWT**, proteksi menggunakan **middleware**, dan dokumentasi API otomatis menggunakan **Swagger (L5-Swagger)**. Cocok digunakan sebagai pondasi awal untuk membangun sistem e-commerce, manajemen data, dan aplikasi modern lainnya.
 
-## 🔗 Repository
-Repository ini berada di:
-[https://github.com/Ganiramadhan/backend-dagangbareng.git](https://github.com/Ganiramadhan/backend-dagangbareng.git)
+## ✨ Fitur Utama
 
-## ⚙️ Persyaratan Sistem
+- ✅ Autentikasi dengan **JWT** (`tymon/jwt-auth`)
+- 🔐 Middleware Laravel untuk proteksi route
+- 📘 Dokumentasi API otomatis dengan **Swagger (L5-Swagger)**
+- 📦 Struktur folder RESTful yang bersih
+- 🧪 Siap untuk integrasi testing dan pengembangan lanjutan
 
-- PHP >= 8.2
-- Composer
-- PostgreSQL
-- Laravel CLI (opsional tapi disarankan)
+---
 
-## 🚀 Panduan Instalasi
-
-Ikuti langkah-langkah berikut untuk menjalankan backend secara lokal:
+## 📦 Instalasi
 
 ### 1. Clone Repository
 
@@ -31,66 +28,69 @@ cd backend-dagangbareng
 composer install
 ```
 
-### 3. Konfigurasi .env
+### 3. Salin File .env
 
 ```bash
 cp .env.example .env
 ```
 
-Edit file `.env` dan sesuaikan bagian database:
+### 4. Konfigurasi Database di `.env`
 
 ```env
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=nama_database_anda
-DB_USERNAME=user_database_anda
-DB_PASSWORD=password_database_anda
+DB_DATABASE=ganipedia
+DB_USERNAME=postgres
+DB_PASSWORD=your_password
 ```
 
-> ⚠️ Pastikan database PostgreSQL dengan nama yang sesuai sudah dibuat.
-
-### 4. Generate Application Key
+### 5. Generate Key dan JWT Secret
 
 ```bash
 php artisan key:generate
+php artisan jwt:secret
 ```
 
-### 5. Jalankan Migrasi
+### 6. Jalankan Migrasi
 
 ```bash
 php artisan migrate
 ```
 
-Jika ada seeder:
-
+(Optional)
 ```bash
 php artisan db:seed
 ```
 
-### 6. Jalankan Server
+### 7. Jalankan Server Lokal
 
 ```bash
 php artisan serve
 ```
 
-Akses API melalui: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+---
+
+## 🔐 Autentikasi JWT
+
+Gunakan endpoint berikut:
+
+- `POST /api/register` — Register user
+- `POST /api/login` — Login dan dapatkan token
+- Header: `Authorization: Bearer {token}` untuk akses endpoint yang dilindungi
+
+---
 
 ## 📘 Dokumentasi API (Swagger)
 
-### Instalasi Swagger
+### Instalasi (Jika belum)
 
 ```bash
-composer require "darkaonline/l5-swagger"
-```
-
-Publikasi konfigurasinya:
-
-```bash
+composer require darkaonline/l5-swagger
 php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 ```
 
-### Generate Dokumentasi
+### Generate dokumentasi
 
 ```bash
 php artisan l5-swagger:generate
@@ -102,17 +102,25 @@ php artisan l5-swagger:generate
 http://127.0.0.1:8000/api/documentation
 ```
 
-## 📁 Struktur Penting
+---
 
-- `app/Http/Controllers/` — Controller untuk API (dengan anotasi Swagger)
-- `routes/api.php` — Routing untuk API
-- `database/migrations/` — Struktur database
-- `app/Models/` — Model Eloquent Laravel
+## 📁 Struktur Proyek
+
+- `app/Http/Controllers/` — Controller untuk API
+- `routes/api.php` — Routing untuk REST API
+- `app/Models/` — Model Eloquent
+- `app/Http/Middleware/` — Middleware kustom dan auth
+- `database/migrations/` — Skema database
+
+---
 
 ## ❓ Troubleshooting
 
-- **Koneksi database gagal**: Pastikan PostgreSQL berjalan dan konfigurasi `.env` benar.
-- **Swagger tidak muncul**: Jalankan `php artisan l5-swagger:generate` dan cek anotasi Swagger di controller.
+- Pastikan `.env` sudah sesuai
+- Jalankan `php artisan config:clear` & `php artisan cache:clear` jika ada error konfigurasi
+- Swagger kosong? Pastikan sudah `php artisan l5-swagger:generate`
+
+---
 
 ## 📄 Lisensi
 
